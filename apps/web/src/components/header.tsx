@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export default function Header() {
   return (
-    <header className="border-b px-4 h-16 top-0 fixed w-full flex items-center justify-between">
+    <header className="z-50 bg-background border-b px-4 h-16 top-0 fixed w-full flex items-center justify-between">
       <Link to="/" className="font-bold text-2xl">
         Former
       </Link>
