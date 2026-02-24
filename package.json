@@ -20,7 +20,8 @@
     "db:start": "turbo -F @former/db db:start",
     "db:watch": "turbo -F @former/db db:watch",
     "db:stop": "turbo -F @former/db db:stop",
-    "db:down": "turbo -F @former/db db:down"
+    "db:down": "turbo -F @former/db db:down",
+    "format": "prettier apps/{server,web}/**/*.{ts,tsx,js,jsx,css} --write"
   },
   "dependencies": {
     "@former/env": "*",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@former/config": "*",
     "@types/node": "^22.13.14",
+    "prettier": "^3.8.1",
     "turbo": "^2.6.3",
     "typescript": "^5"
   },
