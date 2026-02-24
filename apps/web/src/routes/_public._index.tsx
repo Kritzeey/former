@@ -15,7 +15,7 @@ export default function Home() {
           <Link to="/forms">
             <Button
               variant="outline"
-              className="cursor-pointer text-xl p-6 rounded-4xl"
+              className="cursor-pointer text-xl p-6 rounded-md"
             >
               Forms List
             </Button>
@@ -23,7 +23,7 @@ export default function Home() {
 
           <Button
             variant="outline"
-            className="cursor-pointer text-xl p-6 rounded-4xl"
+            className="cursor-pointer text-xl p-6 rounded-md"
           >
             Create a Form
           </Button>
