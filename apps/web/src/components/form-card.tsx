@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { Button } from "./ui/button";
 
 interface Question {
@@ -24,9 +25,11 @@ export default function FormCard({ form }: { form: Form }) {
         </div>
       </div>
 
-      <Button className="rounded-md cursor-pointer hover:opacity-90">
-        Details
-      </Button>
+      <Link to={`/forms/${form.id}`}>
+        <Button className="rounded-md cursor-pointer hover:opacity-90">
+          Details
+        </Button>
+      </Link>
     </div>
   );
 }

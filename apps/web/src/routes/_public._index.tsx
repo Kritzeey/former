@@ -13,18 +13,12 @@ export default function Home() {
         </div>
         <div className="flex gap-4 justify-center">
           <Link to="/forms">
-            <Button
-              variant="outline"
-              className="cursor-pointer text-xl p-6 rounded-md"
-            >
+            <Button className="hover:opacity-90 cursor-pointer text-xl p-6 rounded-md">
               Forms List
             </Button>
           </Link>
 
-          <Button
-            variant="outline"
-            className="cursor-pointer text-xl p-6 rounded-md"
-          >
+          <Button className="hover:opacity-90 cursor-pointer text-xl p-6 rounded-md">
             Create a Form
           </Button>
         </div>
