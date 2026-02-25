@@ -3,7 +3,7 @@ import { CreateFormUseCase } from "@/application/use-cases/forms/create-form.use
 import { GetAllFormsUseCase } from "@/application/use-cases/forms/get-all-forms.use-case";
 import { GetFormByIdUseCase } from "@/application/use-cases/forms/get-form-by-id.use-case";
 import { GetUserFormsUseCase } from "@/application/use-cases/forms/get-user-forms.use-case";
-import { UpdateFormUseCase } from "@/application/use-cases/auth/update-form.use-case";
+import { UpdateFormUseCase } from "@/application/use-cases/forms/update-form.use-case";
 import { DeleteFormUseCase } from "@/application/use-cases/forms/delete-form.use-case";
 import {
   BadRequestException,
