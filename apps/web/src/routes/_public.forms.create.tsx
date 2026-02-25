@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import type { Route } from "../+types/root";
+import type { Route } from "./+types/_public.forms.create";
 import { getCookie } from "@/lib/utils";
 
 export function meta({}: Route.MetaArgs) {

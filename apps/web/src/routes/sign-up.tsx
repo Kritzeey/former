@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import type { Route } from "../+types/root";
+import type { Route } from "./+types/sign-up";
 
 export function meta({}: Route.MetaArgs) {
   return [

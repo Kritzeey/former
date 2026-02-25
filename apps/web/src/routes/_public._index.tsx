@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
-import type { Route } from "../+types/root";
+import type { Route } from "./+types/_public._index";
 
 export function meta({}: Route.MetaArgs) {
   return [
