@@ -2,6 +2,7 @@ import { User } from "@/domain/entities/user.entity";
 import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
 import type { IUserRepository } from "@/application/ports/user-repository.interface";
 import { randomUUID } from "crypto";
+import { BadRequestException } from "@/domain/exceptions/http.exception";
 
 export class CreateUserUseCase {
   constructor(
@@ -16,7 +17,7 @@ export class CreateUserUseCase {
     const existingUser = await this.userRepository.findByUsername(username);
 
     if (existingUser) {
-      throw new Error("Username is already registered");
+      throw new BadRequestException("Username is already registered");
     }
 
     const hashedPassword = await this.passwordHasher.hash(plainPassword);

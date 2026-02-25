@@ -19,7 +19,7 @@ export class AuthController {
     const user = await this.createUserUseCase.execute(username, password);
 
     res.status(201).json({
-      message: "Sign up successful",
+      message: "Sign up successful.",
       user,
     });
   }
@@ -34,7 +34,7 @@ export class AuthController {
     const token = await this.logInUseCase.execute(username, password);
 
     res.status(200).json({
-      message: "Log in successful",
+      message: "Log in successful.",
       token,
     });
   }

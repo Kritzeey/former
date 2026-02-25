@@ -1,5 +1,6 @@
 import { Form } from "@/domain/entities/form.entity";
 import type { IFormRepository } from "@/application/ports/form-repository.interface";
+import { NotFoundException } from "@/domain/exceptions/http.exception";
 
 export class UpdateFormUseCase {
   constructor(private formRepository: IFormRepository) {}
@@ -12,7 +13,7 @@ export class UpdateFormUseCase {
     const form = await this.formRepository.findById(id);
 
     if (!form) {
-      throw new Error("Form not found");
+      throw new NotFoundException("Form not found");
     }
 
     form.updateDetails(newTitle, newDescription);
