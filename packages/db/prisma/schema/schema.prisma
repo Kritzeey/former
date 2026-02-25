@@ -9,13 +9,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum QuestionType {
-  SHORT_ANSWER
-  MULTIPLE_CHOICE
-  CHECKBOXES
-  DROPDOWN
-}
-
 model User {
   id        String   @id @default(uuid())
   username  String   @unique
@@ -30,21 +23,8 @@ model Form {
   title       String
   description String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  questions Question[]
-}
-
-model Question {
-  id         String       @id @default(uuid())
-  text       String
-  type       QuestionType
-  isRequired Boolean      @default(false)
-
-  options String[]
-
-  formId String
-  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
 }

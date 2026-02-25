@@ -11,7 +11,7 @@ export class CreateUserUseCase {
 
   async execute(
     username: string,
-    plainTextPassword: string,
+    plainPassword: string,
   ): Promise<Omit<User, "password">> {
     const existingUser = await this.userRepository.findByUsername(username);
 
@@ -19,7 +19,7 @@ export class CreateUserUseCase {
       throw new Error("Username is already registered");
     }
 
-    const hashedPassword = await this.passwordHasher.hash(plainTextPassword);
+    const hashedPassword = await this.passwordHasher.hash(plainPassword);
 
     const user = new User(randomUUID(), username, hashedPassword, new Date());
 

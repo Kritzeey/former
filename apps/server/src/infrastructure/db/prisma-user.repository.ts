@@ -1,16 +1,26 @@
 import type { IUserRepository } from "@/application/ports/user-repository.interface";
 import { User } from "@/domain/entities/user.entity";
 import prisma from "@former/db";
+import type { User as PrismaUser } from "../../../../../packages/db/prisma/generated/client";
 
 export class PrismaUserRepository implements IUserRepository {
-  async findByUsername(username: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({ where: { username } });
+  private mapToDomain(record: PrismaUser): User {
+    return new User(
+      record.id,
+      record.username,
+      record.password,
+      record.createdAt,
+    );
+  }
 
-    if (!user) {
+  async findByUsername(username: string): Promise<User | null> {
+    const record = await prisma.user.findUnique({ where: { username } });
+
+    if (!record) {
       return null;
     }
 
-    return new User(user.id, user.username, user.password, user.createdAt);
+    return this.mapToDomain(record);
   }
 
   async save(user: User): Promise<void> {

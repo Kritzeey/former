@@ -1,4 +1,4 @@
-import { Form } from "@/domain/entities/form-entity";
+import { Form } from "@/domain/entities/form.entity";
 import type { IFormRepository } from "../ports/form-repository.interface";
 import { randomUUID } from "crypto";
 
@@ -10,14 +10,9 @@ export class CreateFormUseCase {
     title: string,
     description: string,
   ): Promise<Form> {
-    const form = new Form(
-      randomUUID(),
-      userId,
-      title,
-      description,
-      [],
-      new Date(),
-    );
+    const now = new Date();
+
+    const form = new Form(randomUUID(), userId, title, description, now, now);
 
     await this.formRepository.save(form);
 

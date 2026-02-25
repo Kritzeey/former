@@ -1,7 +1,10 @@
-import { Form } from "@/domain/entities/form-entity";
+import { Form } from "@/domain/entities/form.entity";
 
 export interface IFormRepository {
-  save(form: Form): Promise<Form>;
+  save(form: Form): Promise<void>;
+  findAll(): Promise<Form[]>;
   findById(id: string): Promise<Form | null>;
-  findByUserId(userid: string): Promise<Form[]>;
+  findByUserId(userId: string): Promise<Form[]>;
+  update(form: Form): Promise<Form>;
+  delete(id: string): Promise<void>;
 }
