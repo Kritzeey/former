@@ -68,9 +68,9 @@ export default function SignUp() {
           return;
         }
 
-        throw new Error(errorMessage || "Something went wrong during sign up.");
+        throw new Error(errorMessage || "Something went wrong");
       }
-      toast.success("Account created successfully!");
+      toast.success("Account created successfully");
       navigate("/log-in");
     } catch (error: any) {
       toast.error(error.message);

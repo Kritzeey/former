@@ -64,10 +64,10 @@ export default function Login() {
           return;
         }
 
-        throw new Error(errorMessage || "Something went wrong during log in.");
+        throw new Error(errorMessage || "Something went wrong");
       }
 
-      toast.success("Logged in successfully!");
+      toast.success("Logged in successfully");
       navigate("/");
     } catch (error: any) {
       toast.error(error.message);
