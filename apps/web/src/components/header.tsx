@@ -9,13 +9,13 @@ export default function Header() {
       </Link>
 
       <div className="flex gap-2">
-        <Link to="/login">
+        <Link to="/log-in">
           <Button variant="outline" className="cursor-pointer rounded-md">
             Log In
           </Button>
         </Link>
 
-        <Link to="/signup">
+        <Link to="/sign-up">
           <Button className="rounded-md hover:opacity-90 cursor-pointer">
             Sign Up
           </Button>

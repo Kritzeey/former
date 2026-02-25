@@ -17,7 +17,9 @@ export class CreateUserUseCase {
     const existingUser = await this.userRepository.findByUsername(username);
 
     if (existingUser) {
-      throw new BadRequestException("Username is already registered");
+      throw new BadRequestException(
+        "[Err: username] Username is already registered",
+      );
     }
 
     const hashedPassword = await this.passwordHasher.hash(plainPassword);
