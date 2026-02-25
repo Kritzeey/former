@@ -1,6 +1,6 @@
 import { User } from "@/domain/entities/user.entity";
-import type { IPasswordHasher } from "../ports/password-hasher.interface";
-import type { IUserRepository } from "../ports/user-repository.interface";
+import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
+import type { IUserRepository } from "@/application/ports/user-repository.interface";
 import { randomUUID } from "crypto";
 
 export class CreateUserUseCase {
