@@ -40,7 +40,7 @@ export class AuthController {
       const token = await this.logInUseCase.execute(username, password);
 
       res.status(200).json({
-        message: "Login successful",
+        message: "Log in successful",
         token,
       });
     } catch (error: any) {
