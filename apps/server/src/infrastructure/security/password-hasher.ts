@@ -1,0 +1,10 @@
+import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
+import { hash } from "bcrypt";
+
+export class BcryptPasswordHasher implements IPasswordHasher {
+  async hash(password: string): Promise<string> {
+    const saltRounds = 10;
+
+    return await hash(password, saltRounds);
+  }
+}

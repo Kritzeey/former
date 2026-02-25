@@ -12,6 +12,7 @@
   "dependencies": {
     "@former/db": "*",
     "@former/env": "*",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@former/config": "*",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
