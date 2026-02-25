@@ -3,10 +3,12 @@ import { HttpException } from "../../domain/exceptions/http.exception";
 
 export const errorHandler = (
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ): void => {
+  console.error(err);
+
   if (err instanceof HttpException) {
     res.status(err.statusCode).json({ message: err.message });
 

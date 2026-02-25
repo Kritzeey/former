@@ -2,6 +2,7 @@ import { env } from "@former/env/server";
 import cors from "cors";
 import express from "express";
 import authRoutes from "@/presentation/routes/auth.routes";
+import formRoutes from "@/presentation/routes/auth.routes";
 import { errorHandler } from "@/presentation/middlewares/error-handler.middleware";
 
 const app = express();
@@ -20,6 +21,8 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/form", formRoutes);
 
 app.use(errorHandler);
 
