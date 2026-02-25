@@ -1,4 +1,4 @@
-import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
+import type { IPasswordHasher } from "@/application/ports/auth/password-hasher.interface";
 import { compare, hash } from "bcrypt";
 
 export class BcryptPasswordHasher implements IPasswordHasher {

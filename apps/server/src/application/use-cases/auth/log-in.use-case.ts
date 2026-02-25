@@ -1,6 +1,6 @@
-import type { IUserRepository } from "@/application/ports/user-repository.interface";
-import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
-import type { ITokenGenerator } from "../ports/token-generator.interface";
+import type { IUserRepository } from "@/application/ports/user/user-repository.interface";
+import type { IPasswordHasher } from "@/application/ports/auth/password-hasher.interface";
+import type { ITokenGenerator } from "../../ports/auth/token-generator.interface";
 import { UnauthorizedException } from "@/domain/exceptions/http.exception";
 
 export class LogInUseCase {

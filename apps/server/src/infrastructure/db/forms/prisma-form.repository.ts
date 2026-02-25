@@ -1,7 +1,7 @@
 import prisma from "@former/db";
-import type { IFormRepository } from "../../application/ports/form-repository.interface";
-import { Form } from "@/domain/entities/form.entity";
-import type { Form as PrismaForm } from "../../../../../packages/db/prisma/generated/client";
+import type { IFormRepository } from "../../../application/ports/forms/form-repository.interface";
+import { Form } from "@/domain/entities/forms/form.entity";
+import type { Form as PrismaForm } from "../../../../../../packages/db/prisma/generated/client";
 
 export class PrismaFormRepository implements IFormRepository {
   private mapToDomain(record: PrismaForm): Form {

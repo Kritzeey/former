@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { FormController } from "@/presentation/controllers/form.controller";
+import { FormController } from "@/presentation/controllers/forms.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-import { PrismaFormRepository } from "@/infrastructure/db/prisma-form.repository";
-import { CreateFormUseCase } from "@/application/use-cases/create-form.use-case";
-import { GetAllFormsUseCase } from "@/application/use-cases/get-all-forms.use-case";
-import { GetFormByIdUseCase } from "@/application/use-cases/get-form-by-id.use-case";
-import { GetUserFormsUseCase } from "@/application/use-cases/get-user-forms.use-case";
-import { UpdateFormUseCase } from "@/application/use-cases/update-form.use-case";
-import { DeleteFormUseCase } from "@/application/use-cases/delete-form.use-case";
+import { PrismaFormRepository } from "@/infrastructure/db/forms/prisma-form.repository";
+import { CreateFormUseCase } from "@/application/use-cases/forms/create-form.use-case";
+import { GetAllFormsUseCase } from "@/application/use-cases/forms/get-all-forms.use-case";
+import { GetFormByIdUseCase } from "@/application/use-cases/forms/get-form-by-id.use-case";
+import { GetUserFormsUseCase } from "@/application/use-cases/forms/get-user-forms.use-case";
+import { UpdateFormUseCase } from "@/application/use-cases/auth/update-form.use-case";
+import { DeleteFormUseCase } from "@/application/use-cases/forms/delete-form.use-case";
 
 const router = Router();
 

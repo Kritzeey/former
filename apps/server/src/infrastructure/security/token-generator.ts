@@ -1,4 +1,4 @@
-import type { ITokenGenerator } from "@/application/ports/token-generator.interface";
+import type { ITokenGenerator } from "@/application/ports/auth/token-generator.interface";
 import { env } from "@former/env/server";
 import jwt from "jsonwebtoken";
 

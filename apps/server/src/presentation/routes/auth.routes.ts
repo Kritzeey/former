@@ -3,8 +3,8 @@ import { AuthController } from "@/presentation/controllers/auth.controller";
 import { PrismaUserRepository } from "@/infrastructure/db/prisma-user.repository";
 import { BcryptPasswordHasher } from "@/infrastructure/security/password-hasher";
 import { TokenGenerator } from "@/infrastructure/security/token-generator";
-import { CreateUserUseCase } from "@/application/use-cases/create-user.use-case";
-import { LogInUseCase } from "@/application/use-cases/log-in.use-case";
+import { CreateUserUseCase } from "@/application/use-cases/users/create-user.use-case";
+import { LogInUseCase } from "@/application/use-cases/auth/log-in.use-case";
 
 const router = Router();
 

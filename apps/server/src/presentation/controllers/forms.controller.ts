@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
-import { CreateFormUseCase } from "@/application/use-cases/create-form.use-case";
-import { GetAllFormsUseCase } from "@/application/use-cases/get-all-forms.use-case";
-import { GetFormByIdUseCase } from "@/application/use-cases/get-form-by-id.use-case";
-import { GetUserFormsUseCase } from "@/application/use-cases/get-user-forms.use-case";
-import { UpdateFormUseCase } from "@/application/use-cases/update-form.use-case";
-import { DeleteFormUseCase } from "@/application/use-cases/delete-form.use-case";
+import { CreateFormUseCase } from "@/application/use-cases/forms/create-form.use-case";
+import { GetAllFormsUseCase } from "@/application/use-cases/forms/get-all-forms.use-case";
+import { GetFormByIdUseCase } from "@/application/use-cases/forms/get-form-by-id.use-case";
+import { GetUserFormsUseCase } from "@/application/use-cases/forms/get-user-forms.use-case";
+import { UpdateFormUseCase } from "@/application/use-cases/auth/update-form.use-case";
+import { DeleteFormUseCase } from "@/application/use-cases/forms/delete-form.use-case";
 import {
   BadRequestException,
   NotFoundException,

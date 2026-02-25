@@ -1,4 +1,4 @@
-import { Form } from "@/domain/entities/form.entity";
+import { Form } from "@/domain/entities/forms/form.entity";
 
 export interface IFormRepository {
   save(form: Form): Promise<void>;

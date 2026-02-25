@@ -1,6 +1,6 @@
-import { User } from "@/domain/entities/user.entity";
-import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
-import type { IUserRepository } from "@/application/ports/user-repository.interface";
+import { User } from "@/domain/entities/users/user.entity";
+import type { IPasswordHasher } from "@/application/ports/auth/password-hasher.interface";
+import type { IUserRepository } from "@/application/ports/user/user-repository.interface";
 import { randomUUID } from "crypto";
 import { BadRequestException } from "@/domain/exceptions/http.exception";
 

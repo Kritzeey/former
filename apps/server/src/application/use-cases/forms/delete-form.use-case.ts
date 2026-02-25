@@ -1,5 +1,5 @@
-import type { IFormRepository } from "@/application/ports/form-repository.interface";
-import type { Form } from "@/domain/entities/form.entity";
+import type { IFormRepository } from "@/application/ports/forms/form-repository.interface";
+import type { Form } from "@/domain/entities/forms/form.entity";
 import {
   NotFoundException,
   UnauthorizedException,

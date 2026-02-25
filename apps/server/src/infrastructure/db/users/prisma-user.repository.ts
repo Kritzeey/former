@@ -1,5 +1,5 @@
-import type { IUserRepository } from "@/application/ports/user-repository.interface";
-import { User } from "@/domain/entities/user.entity";
+import type { IUserRepository } from "@/application/ports/user/user-repository.interface";
+import { User } from "@/domain/entities/users/user.entity";
 import prisma from "@former/db";
 import type { User as PrismaUser } from "../../../../../packages/db/prisma/generated/client";
 

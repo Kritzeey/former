@@ -1,5 +1,5 @@
-import { Form } from "@/domain/entities/form.entity";
-import type { IFormRepository } from "../ports/form-repository.interface";
+import { Form } from "@/domain/entities/forms/form.entity";
+import type { IFormRepository } from "../../ports/forms/form-repository.interface";
 import { randomUUID } from "crypto";
 
 export class CreateFormUseCase {
