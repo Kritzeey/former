@@ -12,7 +12,7 @@ export class CreateUserUseCase {
   async execute(
     username: string,
     plainTextPassword: string,
-  ): Promise<Omit<User, "passwordHash">> {
+  ): Promise<Omit<User, "password">> {
     const existingUser = await this.userRepository.findByUsername(username);
 
     if (existingUser) {
@@ -25,7 +25,7 @@ export class CreateUserUseCase {
 
     await this.userRepository.save(user);
 
-    const { passwordHash, ...result } = user;
+    const { password, ...result } = user;
 
     return result;
   }
