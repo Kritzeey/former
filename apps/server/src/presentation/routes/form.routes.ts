@@ -24,11 +24,10 @@ const formController = new FormController(
 );
 
 router.get("/:id", (req, res) => formController.getById(req, res));
+router.get("/", (req, res) => formController.getAll(req, res));
+router.get("/user/:id", (req, res) => formController.getByUserId(req, res));
 
 router.post("/", authMiddleware, (req, res) => formController.create(req, res));
-router.get("/user/me", authMiddleware, (req, res) =>
-  formController.getByUser(req, res),
-);
 router.put("/:id", authMiddleware, (req, res) =>
   formController.update(req, res),
 );

@@ -22,7 +22,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 
-app.use("/api/form", formRoutes);
+app.use("/api/forms", formRoutes);
 
 app.use(errorHandler);
 

@@ -24,7 +24,7 @@ export class FormController {
     const { title, description } = req.body;
 
     if (!title || !description) {
-      throw new BadRequestException("Title, and description are required.");
+      throw new BadRequestException("Title and description are required.");
     }
 
     const form = await this.createFormUseCase.execute(
@@ -58,7 +58,7 @@ export class FormController {
     res.status(200).json({ message: "Form fetched successfully", form });
   }
 
-  async getByUser(req: Request, res: Response): Promise<void> {
+  async getByUserId(req: Request, res: Response): Promise<void> {
     const id = req.params.id;
 
     if (typeof id !== "string") {
