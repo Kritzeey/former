@@ -53,10 +53,14 @@ export default function Login() {
         const match = errorMessage.match(/^\[Err:\s*([^\]]+)\]\s*(.*)$/);
 
         if (match) {
-          const field = match[1] as keyof LogInDto;
+          const fields = match[1]
+            .split(",")
+            .map((f: string) => f.trim()) as (keyof LogInDto)[];
           const message = match[2];
 
-          setError(field, { type: "server", message });
+          fields.forEach((field) => {
+            setError(field, { type: "server", message });
+          });
           return;
         }
 
