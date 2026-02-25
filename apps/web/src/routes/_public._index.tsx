@@ -18,9 +18,11 @@ export default function Home() {
             </Button>
           </Link>
 
-          <Button className="hover:opacity-90 cursor-pointer text-md p-5 rounded-md">
-            Create a Form
-          </Button>
+          <Link to="/forms/create">
+            <Button className="hover:opacity-90 cursor-pointer text-md p-5 rounded-md">
+              Create a Form
+            </Button>
+          </Link>
         </div>
       </div>
     </main>
