@@ -11,9 +11,16 @@ interface Form {
   _title: string;
   response?: number;
   questions?: Question[];
+  userId?: string;
 }
 
-export default function FormCard({ form }: { form: Form }) {
+export default function FormCard({
+  form,
+  isOwner,
+}: {
+  form: Form;
+  isOwner?: boolean;
+}) {
   return (
     <div className="flex w-full justify-between items-center p-4 hover:bg-primary/20 rounded-xl transition-colors">
       <div className="flex flex-col gap-2">
@@ -26,11 +33,24 @@ export default function FormCard({ form }: { form: Form }) {
         </div>
       </div>
 
-      <Link to={`/forms/${form.id}`}>
-        <Button className="rounded-md cursor-pointer hover:opacity-90">
-          Details
-        </Button>
-      </Link>
+      <div className="flex gap-2 items-center">
+        {isOwner && (
+          <Link to={`/forms/edit/${form.id}`}>
+            <Button
+              variant="outline"
+              className="rounded-md cursor-pointer hover:opacity-90"
+            >
+              Edit
+            </Button>
+          </Link>
+        )}
+
+        <Link to={`/forms/${form.id}`}>
+          <Button className="rounded-md cursor-pointer hover:opacity-90">
+            Details
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

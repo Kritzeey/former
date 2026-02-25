@@ -14,26 +14,40 @@ export function meta({}: Route.MetaArgs) {
 export async function clientLoader({ request }: Route.ClientLoaderArgs) {
   const token = getCookie("accessToken");
 
-  const response = await fetch("http://localhost:3000/api/forms", {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-  });
+  const [formsResponse, userResponse] = await Promise.all([
+    fetch("http://localhost:3000/api/forms", {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    }),
+    token
+      ? fetch("http://localhost:3000/api/auth/me", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      : Promise.resolve(null),
+  ]);
 
-  if (!response.ok) {
+  if (!formsResponse.ok) {
     throw new Error("Failed to fetch forms");
   }
 
-  const data = await response.json();
+  const formsData = await formsResponse.json();
+  let user = null;
 
-  console.log(data);
+  if (userResponse && userResponse.ok) {
+    const userData = await userResponse.json();
+    user = userData.user;
+  }
 
-  return data.forms;
+  return { forms: formsData.forms, user };
 }
 
 export default function Forms() {
-  const forms = useLoaderData<typeof clientLoader>();
+  const { forms, user } = useLoaderData<typeof clientLoader>();
 
   return (
     <main className="pt-16 h-full w-full items-center justify-center flex">
@@ -53,7 +67,13 @@ export default function Forms() {
                 No forms found. Create one to get started!
               </div>
             ) : (
-              forms.map((form: any) => <FormCard key={form.id} form={form} />)
+              forms.map((form: any) => (
+                <FormCard
+                  key={form.id}
+                  form={form}
+                  isOwner={user?.id === form.userId}
+                />
+              ))
             )}
           </div>
         </div>

@@ -49,8 +49,11 @@ export default function FormDetail() {
     <main className="pt-16 flex flex-col">
       <div className="flex items-center justify-between mx-auto max-w-4xl w-full p-6 border-b">
         <div className="flex flex-col justify-center w-full items-center gap-4">
-          <h1 className="text-3xl font-bold text-[#56453f]">{form._title}</h1>
-          <p className="text-[#a37764] flex items-center gap-2">
+          <div className="flex flex-col gap-2 items-center">
+            <p className="text-3xl font-bold text-primary">{form._title}</p>
+            <p className="text-primary">{form._description}</p>
+          </div>
+          <p className="text-secondary flex items-center gap-2">
             {form.response || 0} total responses
           </p>
         </div>
