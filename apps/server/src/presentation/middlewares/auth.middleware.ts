@@ -2,9 +2,9 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { UnauthorizedException } from "../../domain/exceptions/http.exception";
 
-export const requireAuth = (
+export const authMiddleware = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ): void => {
   const authHeader = req.headers.authorization;

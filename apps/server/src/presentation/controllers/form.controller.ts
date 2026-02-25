@@ -38,14 +38,20 @@ export class FormController {
     res.status(201).json({ message: "Form created successfully.", form });
   }
 
-  async getAll(req: Request, res: Response): Promise<void> {
+  async getAll(_req: Request, res: Response): Promise<void> {
     const forms = await this.getAllFormsUseCase.execute();
 
     res.status(200).json({ message: "Forms fetched successfully", forms });
   }
 
-  async getById(req: Request<{ id: string }>, res: Response): Promise<void> {
-    const form = await this.getFormByIdUseCase.execute(req.params.id);
+  async getById(req: Request, res: Response): Promise<void> {
+    const id = req.params.id;
+
+    if (typeof id !== "string") {
+      throw new BadRequestException("Invalid ID parameter");
+    }
+
+    const form = await this.getFormByIdUseCase.execute(id);
 
     if (!form) {
       throw new NotFoundException("Form not found");
@@ -54,30 +60,44 @@ export class FormController {
     res.status(200).json({ message: "Form fetched successfully", form });
   }
 
-  async getByUser(req: Request<{ id: string }>, res: Response): Promise<void> {
-    const forms = await this.getUserFormsUseCase.execute(req.params.id);
+  async getByUser(req: Request, res: Response): Promise<void> {
+    const id = req.params.id;
+
+    if (typeof id !== "string") {
+      throw new BadRequestException("Invalid ID parameter");
+    }
+
+    const forms = await this.getUserFormsUseCase.execute(id);
 
     res.status(200).json({ message: "Forms fetched successfully", forms });
   }
 
-  async update(req: Request<{ id: string }>, res: Response): Promise<void> {
+  async update(req: Request, res: Response): Promise<void> {
+    const id = req.params.id;
+
+    if (typeof id !== "string") {
+      throw new BadRequestException("Invalid ID parameter");
+    }
+
     const { title, description } = req.body;
 
     if (!title || !description) {
       throw new BadRequestException("Title and description are required.");
     }
 
-    const form = await this.updateFormUseCase.execute(
-      req.params.id,
-      title,
-      description,
-    );
+    const form = await this.updateFormUseCase.execute(id, title, description);
 
     res.status(200).json(form);
   }
 
-  async delete(req: Request<{ id: string }>, res: Response): Promise<void> {
-    await this.deleteFormUseCase.execute(req.params.id);
+  async delete(req: Request, res: Response): Promise<void> {
+    const id = req.params.id;
+
+    if (typeof id !== "string") {
+      throw new BadRequestException("Invalid ID parameter");
+    }
+
+    await this.deleteFormUseCase.execute(id);
 
     res.status(204).json({ message: "Form deleted successfully." });
   }
