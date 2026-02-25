@@ -75,6 +75,10 @@ export default function Login() {
         throw new Error(errorMessage || "Something went wrong");
       }
 
+      const { token } = await response.json();
+
+      document.cookie = `accessToken=${token}; path=/; max-age=86400; SameSite=Strict`;
+
       toast.success("Logged in successfully");
       navigate("/");
     } catch (error: any) {

@@ -23,10 +23,11 @@ export const authMiddleware = (
   try {
     const secret = env.JWT_SECRET;
 
-    const payload = jwt.verify(token, secret) as { sub: string };
+    const payload = jwt.verify(token, secret) as { sub: string; user: string };
 
     req.user = {
       id: payload.sub,
+      user: payload.user,
     };
 
     next();

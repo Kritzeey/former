@@ -29,6 +29,7 @@ export class LogInUseCase {
 
     const token = this.tokenGenerator.generateToken({
       sub: user.id,
+      user: user.username,
     });
 
     return token;
