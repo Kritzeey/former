@@ -21,16 +21,14 @@ export class FormController {
   ) {}
 
   async create(req: Request, res: Response): Promise<void> {
-    const { userId, title, description } = req.body;
+    const { title, description } = req.body;
 
-    if (!userId || !title || !description) {
-      throw new BadRequestException(
-        "userId, title, and description are required.",
-      );
+    if (!title || !description) {
+      throw new BadRequestException("Title, and description are required.");
     }
 
     const form = await this.createFormUseCase.execute(
-      userId,
+      req.user!.id,
       title,
       description,
     );
