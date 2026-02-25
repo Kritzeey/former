@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -12,6 +13,7 @@ import type { Route } from "./+types/root";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "./components/ui/sonner";
+import { Loader2 } from "lucide-react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -45,18 +47,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const navigation = useNavigation();
+
+  const isNavigating =
+    navigation.state === "loading" || navigation.state === "submitting";
+
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      disableTransitionOnChange
-      storageKey="vite-ui-theme"
-    >
-      <div className="grid grid-rows-[auto_1fr] h-svh">
+    <>
+      {isNavigating && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-background/50 backdrop-blur-sm transition-all duration-300">
+          <div className="flex flex-col items-center gap-3">
+            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            <p className="text-sm font-medium text-muted-foreground animate-pulse">
+              Loading...
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-rows-[auto_1fr] h-dvh">
         <Outlet />
       </div>
       <Toaster richColors />
-    </ThemeProvider>
+    </>
   );
 }
 
