@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { UnauthorizedException } from "../../domain/exceptions/http.exception";
+import { env } from "@former/env/server";
 
 export const authMiddleware = (
   req: Request,
@@ -20,9 +21,9 @@ export const authMiddleware = (
   }
 
   try {
-    const secret = process.env.JWT_SECRET || "super_secret_fallback_key";
+    const secret = env.JWT_SECRET;
 
-    const payload = jwt.verify(token, secret);
+    const payload = jwt.verify(token, secret) as { sub: string };
 
     req.user = {
       id: payload.sub,

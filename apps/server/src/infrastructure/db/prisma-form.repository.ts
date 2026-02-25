@@ -68,9 +68,11 @@ export class PrismaFormRepository implements IFormRepository {
     return this.mapToDomain(record);
   }
 
-  async delete(id: string): Promise<void> {
-    await prisma.form.delete({
+  async delete(id: string): Promise<Form> {
+    const record = await prisma.form.delete({
       where: { id },
     });
+
+    return this.mapToDomain(record);
   }
 }
