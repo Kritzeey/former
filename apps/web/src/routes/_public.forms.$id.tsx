@@ -1,7 +1,14 @@
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import { forms } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Former | Form Detail" },
+    { name: "description", content: "Form detail." },
+  ];
+}
 
 export default function FormDetail() {
   const { id } = useParams();

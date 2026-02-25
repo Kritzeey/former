@@ -1,5 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Former | Easy Form Maker" },
+    { name: "description", content: "Create forms, hassle free." },
+  ];
+}
 
 export default function Home() {
   return (

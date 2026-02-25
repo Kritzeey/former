@@ -15,6 +15,14 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Former | Log In" },
+    { name: "description", content: "Log in to your account." },
+  ];
+}
 
 export const logInSchema = z.object({
   username: z.string().min(1, "Username is required"),

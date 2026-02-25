@@ -1,6 +1,14 @@
 import FormCard from "@/components/form-card";
 import { Button } from "@/components/ui/button";
 import { forms } from "@/lib/constants";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Former | Forms List" },
+    { name: "description", content: "Forms list." },
+  ];
+}
 
 export default function Forms() {
   return (
