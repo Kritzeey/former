@@ -72,6 +72,7 @@ export class FormController {
 
   async update(req: Request, res: Response): Promise<void> {
     const id = req.params.id;
+    const userId = req.user!.id;
 
     if (typeof id !== "string") {
       throw new BadRequestException("Invalid ID parameter");
@@ -83,20 +84,26 @@ export class FormController {
       throw new BadRequestException("Title and description are required.");
     }
 
-    const form = await this.updateFormUseCase.execute(id, title, description);
+    const form = await this.updateFormUseCase.execute(
+      id,
+      userId,
+      title,
+      description,
+    );
 
-    res.status(200).json(form);
+    res.status(200).json({ message: "Form updated successfully", form });
   }
 
   async delete(req: Request, res: Response): Promise<void> {
     const id = req.params.id;
+    const userId = req.user!.id;
 
     if (typeof id !== "string") {
       throw new BadRequestException("Invalid ID parameter");
     }
 
-    await this.deleteFormUseCase.execute(id);
+    const form = await this.deleteFormUseCase.execute(id, userId);
 
-    res.status(204).json({ message: "Form deleted successfully." });
+    res.status(200).json({ message: `Form deleted successfully`, form });
   }
 }

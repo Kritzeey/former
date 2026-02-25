@@ -6,5 +6,5 @@ export interface IFormRepository {
   findById(id: string): Promise<Form | null>;
   findByUserId(userId: string): Promise<Form[]>;
   update(form: Form): Promise<Form>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<Form>;
 }
