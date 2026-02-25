@@ -15,4 +15,8 @@ export class Form {
 
     this.questions.push(question);
   }
+
+  public getQuestions(): Array<Question> {
+    return this.questions;
+  }
 }
