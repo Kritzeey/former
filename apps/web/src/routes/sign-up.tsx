@@ -19,7 +19,7 @@ import type { Route } from "../+types/root";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Former | Log In" },
+    { title: "Former | Sign Up" },
     { name: "description", content: "Create a new account." },
   ];
 }
