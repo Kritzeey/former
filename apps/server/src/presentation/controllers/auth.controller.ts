@@ -38,4 +38,10 @@ export class AuthController {
       token,
     });
   }
+
+  async getMe(req: Request, res: Response): Promise<void> {
+    const user = req.user;
+
+    res.status(200).json({ user });
+  }
 }
