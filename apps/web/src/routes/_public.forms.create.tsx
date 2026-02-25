@@ -92,7 +92,7 @@ export default function CreateForm() {
       }
 
       toast.success("Form created successfully");
-      navigate("/");
+      navigate("/forms");
     } catch (error: any) {
       toast.error(error.message);
     } finally {

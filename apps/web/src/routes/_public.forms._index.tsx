@@ -2,6 +2,7 @@ import FormCard from "@/components/form-card";
 import { Button } from "@/components/ui/button";
 import { Link, useLoaderData } from "react-router";
 import { getCookie } from "@/lib/utils";
+import { useState } from "react"; // 1. Added useState
 import type { Route } from "./+types/_public.forms._index";
 
 export function meta({}: Route.MetaArgs) {
@@ -48,6 +49,13 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
 
 export default function Forms() {
   const { forms, user } = useLoaderData<typeof clientLoader>();
+  const [localForms, setLocalForms] = useState(forms);
+
+  const handleRemoveForm = (idToRemove: string | number) => {
+    setLocalForms((prevForms: any[]) =>
+      prevForms.filter((f) => f.id !== idToRemove),
+    );
+  };
 
   return (
     <main className="pt-16 h-full w-full items-center justify-center flex">
@@ -62,16 +70,18 @@ export default function Forms() {
 
         <div className="p-4 col-span-4 h-full overflow-y-auto">
           <div className="flex flex-col gap-2">
-            {forms.length === 0 ? (
+            {/* 4. Map over localForms instead of the raw loader forms */}
+            {localForms.length === 0 ? (
               <div className="text-center text-muted-foreground mt-10">
                 No forms found. Create one to get started!
               </div>
             ) : (
-              forms.map((form: any) => (
+              localForms.map((form: any) => (
                 <FormCard
                   key={form.id}
                   form={form}
                   isOwner={user?.id === form.userId}
+                  onDeleteSuccess={handleRemoveForm}
                 />
               ))
             )}
