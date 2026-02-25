@@ -1,7 +1,7 @@
 import { env } from "@former/env/server";
 import cors from "cors";
 import express from "express";
-import userRoutes from "@/presentation/routes/user.routes";
+import authRoutes from "@/presentation/routes/auth.routes";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.get("/", (_req, res) => {
   res.status(200).send("OK");
 });
 
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");

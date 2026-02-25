@@ -2,7 +2,7 @@ import type { IUserRepository } from "@/application/ports/user-repository.interf
 import type { IPasswordHasher } from "@/application/ports/password-hasher.interface";
 import type { ITokenGenerator } from "../ports/token-generator.interface";
 
-export class LoginUserUseCase {
+export class LogInUseCase {
   constructor(
     private userRepository: IUserRepository,
     private passwordHasher: IPasswordHasher,
