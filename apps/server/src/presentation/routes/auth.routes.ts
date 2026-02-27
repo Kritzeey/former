@@ -3,13 +3,14 @@ import { AuthController } from "@/presentation/controllers/auth.controller";
 import { PrismaUserRepository } from "@/infrastructure/db/users/prisma-user.repository";
 import { BcryptPasswordHasher } from "@/infrastructure/security/password-hasher";
 import { TokenGenerator } from "@/infrastructure/security/token-generator";
-import { CreateUserUseCase } from "@/application/use-cases/users/create-user.use-case";
+import { CreateUserUseCase } from "@/application/use-cases/auth/sign-up.use-case";
 import { LogInUseCase } from "@/application/use-cases/auth/log-in.use-case";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
 const userRepository = new PrismaUserRepository();
+
 const passwordHasher = new BcryptPasswordHasher();
 const tokenGenerator = new TokenGenerator();
 

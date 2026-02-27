@@ -16,7 +16,7 @@ export class DeleteFormUseCase {
     }
 
     if (form.userId !== userId) {
-      throw new UnauthorizedException("You can only delete your own forms");
+      throw new UnauthorizedException("You can only delete your own form");
     }
 
     return await this.formRepository.delete(id);

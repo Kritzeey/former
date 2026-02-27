@@ -14,17 +14,13 @@ export class LogInUseCase {
     const user = await this.userRepository.findByUsername(username);
 
     if (!user) {
-      throw new UnauthorizedException(
-        "[Err: username, password] Invalid username or password.",
-      );
+      throw new UnauthorizedException("Invalid username or password.");
     }
 
     const valid = await this.passwordHasher.compare(password, user.password);
 
     if (!valid) {
-      throw new UnauthorizedException(
-        "[Err: username, password] Invalid username or password.",
-      );
+      throw new UnauthorizedException("Invalid username or password.");
     }
 
     const token = this.tokenGenerator.generateToken({

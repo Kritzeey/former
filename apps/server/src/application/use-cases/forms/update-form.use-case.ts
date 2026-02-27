@@ -21,7 +21,7 @@ export class UpdateFormUseCase {
     }
 
     if (form.userId !== userId) {
-      throw new UnauthorizedException("You can only update your own forms");
+      throw new UnauthorizedException("You can only update your own form");
     }
 
     form.updateDetails(newTitle, newDescription);

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { FormController } from "@/presentation/controllers/forms.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
-
 import { PrismaFormRepository } from "@/infrastructure/db/forms/prisma-form.repository";
 import { CreateFormUseCase } from "@/application/use-cases/forms/create-form.use-case";
 import { GetAllFormsUseCase } from "@/application/use-cases/forms/get-all-forms.use-case";
@@ -26,7 +25,6 @@ const formController = new FormController(
 router.get("/:id", (req, res) => formController.getById(req, res));
 router.get("/", (req, res) => formController.getAll(req, res));
 router.get("/user/:id", (req, res) => formController.getByUserId(req, res));
-
 router.post("/", authMiddleware, (req, res) => formController.create(req, res));
 router.put("/:id", authMiddleware, (req, res) =>
   formController.update(req, res),

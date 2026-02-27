@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { CreateUserUseCase } from "@/application/use-cases/users/create-user.use-case";
+import { CreateUserUseCase } from "@/application/use-cases/auth/sign-up.use-case";
 import { LogInUseCase } from "@/application/use-cases/auth/log-in.use-case";
 import { BadRequestException } from "@/domain/exceptions/http.exception";
 
