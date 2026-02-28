@@ -5,12 +5,12 @@ import { toast } from "sonner";
 import { getCookie } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
 
 interface Question {
   id: number | string;
@@ -25,15 +25,17 @@ interface Form {
   userId?: string;
 }
 
+interface FormCardProps {
+  form: Form;
+  isOwner?: boolean;
+  onDeleteSuccess?: (id: string | number) => void;
+}
+
 export default function FormCard({
   form,
   isOwner,
   onDeleteSuccess,
-}: {
-  form: Form;
-  isOwner?: boolean;
-  onDeleteSuccess?: (id: string | number) => void;
-}) {
+}: FormCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -42,33 +44,33 @@ export default function FormCard({
 
     try {
       const token = getCookie("accessToken");
+      const apiUrl = import.meta.env.VITE_SERVER_URL;
 
-      const response = await fetch(
-        `http://localhost:3000/api/forms/${form.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
+      const response = await fetch(`${apiUrl}/forms/${form.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-      );
+      });
 
       if (!response.ok) {
-        if (response.status !== 204) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || "Failed to delete form");
-        }
+        throw new Error("Failed to delete form");
       }
 
       toast.success("Form deleted successfully");
+
       setIsModalOpen(false);
 
       if (onDeleteSuccess) {
         onDeleteSuccess(form.id);
       }
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setIsDeleting(false);
     }
@@ -80,7 +82,7 @@ export default function FormCard({
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold">{form._title}</div>
 
-          <div className="text-md text-primary font-medium">
+          <div className="text-base text-primary font-medium">
             {form.questions?.length || 0}{" "}
             Questions&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             {form.response || 0} Responses
@@ -97,7 +99,6 @@ export default function FormCard({
               >
                 Delete
               </Button>
-
               <Link to={`/forms/edit/${form.id}`}>
                 <Button
                   variant="outline"
@@ -117,48 +118,42 @@ export default function FormCard({
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 z-150 flex items-center justify-center bg-background/80 backdrop-blur-sm transition-all duration-300">
-          <Card className="w-full max-w-md shadow-lg rounded-md">
-            <CardHeader className="flex flex-col gap-2 items-center">
-              <CardTitle className="text-2xl font-bold text-center text-primary">
-                Delete Form
-              </CardTitle>
+      <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <AlertDialogContent className="rounded-md w-full max-w-md">
+          <AlertDialogHeader className="flex flex-col gap-2 items-center">
+            <AlertDialogTitle className="text-2xl font-bold text-center text-primary">
+              Delete Form
+            </AlertDialogTitle>
 
-              <CardDescription className="text-sm text-center text-secondary">
-                Are you sure you want to delete{" "}
-                <strong className="text-primary">{form._title}</strong>? This
-                action cannot be undone.
-              </CardDescription>
-            </CardHeader>
+            <AlertDialogDescription className="text-sm text-center text-secondary">
+              Are you sure you want to delete{" "}
+              <strong className="text-primary">{form._title}</strong>? This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
 
-            <CardContent>
-              <div className="flex flex-col w-full gap-2 mt-2">
-                <Button
-                  variant="outline"
-                  className="w-full rounded-md cursor-pointer"
-                  onClick={() => setIsModalOpen(false)}
-                  disabled={isDeleting}
-                >
-                  Cancel
-                </Button>
+          <div className="flex flex-col w-full gap-2 mt-2">
+            <Button
+              variant="outline"
+              className="w-full rounded-md cursor-pointer"
+              onClick={() => setIsModalOpen(false)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
 
-                <Button
-                  variant="destructive"
-                  className="border border-destructive w-full rounded-md cursor-pointer"
-                  onClick={handleDelete}
-                  disabled={isDeleting}
-                >
-                  {isDeleting && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  {isDeleting ? "Deleting..." : "Delete"}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+            <Button
+              variant="destructive"
+              className="border border-destructive w-full rounded-md cursor-pointer"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isDeleting ? "Deleting..." : "Delete"}
+            </Button>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

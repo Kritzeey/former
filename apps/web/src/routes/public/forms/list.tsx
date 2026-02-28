@@ -5,25 +5,26 @@ import { getCookie } from "@/lib/utils";
 import { useState } from "react";
 import type { Route } from "./+types/list";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Former | Forms List" },
     { name: "description", content: "Forms list." },
   ];
 }
 
-export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+export async function clientLoader() {
   const token = getCookie("accessToken");
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
   const [formsResponse, userResponse] = await Promise.all([
-    fetch("http://localhost:3000/api/forms", {
+    fetch(`${apiUrl}/forms`, {
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     }),
     token
-      ? fetch("http://localhost:3000/api/auth/me", {
+      ? fetch(`${apiUrl}/auth/me`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -47,14 +48,20 @@ export async function clientLoader({ request }: Route.ClientLoaderArgs) {
   return { forms: formsData.forms, user };
 }
 
+interface Form {
+  id: string | number;
+  _title: string;
+  response?: number;
+  userId?: string;
+  questions?: any[];
+}
+
 export default function Forms() {
   const { forms, user } = useLoaderData<typeof clientLoader>();
-  const [localForms, setLocalForms] = useState(forms);
+  const [localForms, setLocalForms] = useState<Form[]>(forms);
 
   const handleRemoveForm = (idToRemove: string | number) => {
-    setLocalForms((prevForms: any[]) =>
-      prevForms.filter((f) => f.id !== idToRemove),
-    );
+    setLocalForms((prevForms) => prevForms.filter((f) => f.id !== idToRemove));
   };
 
   return (
@@ -70,13 +77,12 @@ export default function Forms() {
 
         <div className="p-4 col-span-4 h-full overflow-y-auto">
           <div className="flex flex-col gap-2">
-            {/* 4. Map over localForms instead of the raw loader forms */}
             {localForms.length === 0 ? (
               <div className="text-center text-muted-foreground mt-10">
                 No forms found. Create one to get started!
               </div>
             ) : (
-              localForms.map((form: any) => (
+              localForms.map((form) => (
                 <FormCard
                   key={form.id}
                   form={form}

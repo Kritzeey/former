@@ -11,9 +11,9 @@ import {
 import type { Route } from "./+types/root";
 
 import "./index.css";
-import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "./components/ui/sonner";
 import { Loader2 } from "lucide-react";
+import { getCookie } from "@/lib/utils";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -27,6 +27,34 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap",
   },
 ];
+
+export async function clientLoader() {
+  const token = getCookie("accessToken");
+
+  if (!token) {
+    return { user: null };
+  }
+
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
+  try {
+    const response = await fetch(`${apiUrl}/auth/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { user: data.user };
+    }
+
+    return { user: null };
+  } catch (error) {
+    return { user: null };
+  }
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

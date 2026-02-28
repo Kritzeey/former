@@ -55,8 +55,9 @@ export default function SignUp() {
 
     try {
       const { confirmPassword, ...serverPayload } = data;
+      const apiUrl = import.meta.env.VITE_API_URL;
 
-      const response = await fetch("http://localhost:3000/api/auth/sign-up", {
+      const response = await fetch(`${apiUrl}/auth/sign-up`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(serverPayload),
@@ -78,10 +79,22 @@ export default function SignUp() {
 
         throw new Error(errorMessage || "Something went wrong");
       }
+
+      const responseData = await response.json();
+
+      if (responseData.token) {
+        document.cookie = `accessToken=${responseData.token}; path=/; max-age=86400; SameSite=Strict`;
+      }
+
       toast.success("Account created successfully");
-      navigate("/log-in");
-    } catch (error: any) {
-      toast.error(error.message);
+
+      navigate("/");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -120,8 +133,8 @@ export default function SignUp() {
                 disabled={isLoading}
                 className={
                   errors.username
-                    ? "border-red-500 focus-visible:ring-red-500 rounded-md"
-                    : "rounded-md"
+                    ? "border-red-500 focus-visible:ring-red-500 rounded-md placeholder:text-muted-foreground/60"
+                    : "rounded-md placeholder:text-muted-foreground/60"
                 }
                 {...register("username")}
                 placeholder="johndoe"

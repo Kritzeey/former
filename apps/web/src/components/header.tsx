@@ -1,50 +1,24 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useRouteLoaderData } from "react-router";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import { getCookie } from "@/lib/utils";
+
+interface User {
+  id: string;
+  user: string;
+}
 
 export default function Header() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<{ id: string; user: string } | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    () => !!getCookie("accessToken"),
-  );
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      const fetchUser = async () => {
-        const token = getCookie("accessToken");
-        try {
-          const response = await fetch("http://localhost:3000/api/auth/me", {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+  const loaderData = useRouteLoaderData("root") as
+    | { user: User | null }
+    | undefined;
 
-          if (response.ok) {
-            const data = await response.json();
+  const user = loaderData?.user || null;
 
-            console.log(data);
-
-            setUser(data.user);
-          } else {
-            handleLogout();
-          }
-        } catch (error) {
-          console.error("Failed to fetch user profile", error);
-        }
-      };
-
-      fetchUser();
-    }
-  }, [isLoggedIn]);
+  const isLoggedIn = !!user;
 
   const handleLogout = () => {
     document.cookie = "accessToken=; path=/; max-age=0; SameSite=Strict";
-
-    setIsLoggedIn(false);
-    setUser(null);
 
     navigate("/log-in");
   };
@@ -58,9 +32,7 @@ export default function Header() {
       <div className="flex gap-2 items-center">
         {isLoggedIn ? (
           <>
-            {user && (
-              <span className="text-sm font-medium mr-2 ">{user.user}</span>
-            )}
+            <span className="text-sm font-medium mr-2">{user.user}</span>
 
             <Button
               variant="outline"

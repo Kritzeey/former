@@ -18,14 +18,14 @@ import { Loader2 } from "lucide-react";
 import { getCookie } from "@/lib/utils";
 import type { Route } from "./+types/create";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Former | Create Form" },
     { name: "description", content: "Create a new form." },
   ];
 }
 
-export async function clientLoader({}: Route.ClientLoaderArgs) {
+export async function clientLoader() {
   const token = getCookie("accessToken");
 
   if (!token) {
@@ -33,7 +33,8 @@ export async function clientLoader({}: Route.ClientLoaderArgs) {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/api/auth/me", {
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+    const response = await fetch(`${apiUrl}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +64,6 @@ export default function CreateForm() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<CreateFormDto>({
     resolver: zodResolver(createFormSchema),
@@ -74,8 +74,10 @@ export default function CreateForm() {
 
     try {
       const token = getCookie("accessToken");
+      const apiUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-      const response = await fetch("http://localhost:3000/api/forms", {
+      const response = await fetch(`${apiUrl}/forms`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,15 +88,17 @@ export default function CreateForm() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.message || "";
-
-        throw new Error(errorMessage || "Something went wrong");
+        throw new Error(errorData.message || "Something went wrong");
       }
 
       toast.success("Form created successfully");
       navigate("/forms");
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setIsLoading(false);
     }

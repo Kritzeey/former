@@ -21,8 +21,8 @@ import type { Route } from "./+types/edit";
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
     {
-      title: loaderData
-        ? `Former | Edit ${loaderData.form.title}`
+      title: loaderData?.form?._title
+        ? `Former | Edit ${loaderData.form._title}`
         : "Former | Edit Form",
     },
     { name: "description", content: "Edit an existing form." },
@@ -37,11 +37,13 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   }
 
   try {
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
     const [userResponse, formResponse] = await Promise.all([
-      fetch("http://localhost:3000/api/auth/me", {
+      fetch(`${apiUrl}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      fetch(`http://localhost:3000/api/forms/${params.id}`, {
+      fetch(`${apiUrl}/forms/${params.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ]);
@@ -56,7 +58,6 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 
     if (userData.user.id !== formData.form.userId) {
       toast.error("You are not authorized to edit this form.");
-
       return redirect(`/forms`);
     }
 
@@ -82,7 +83,6 @@ export default function EditForm() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<EditFormDto>({
     resolver: zodResolver(editFormSchema),
@@ -97,31 +97,31 @@ export default function EditForm() {
 
     try {
       const token = getCookie("accessToken");
+      const apiUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-      const response = await fetch(
-        `http://localhost:3000/api/forms/${form.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify(data),
+      const response = await fetch(`${apiUrl}/forms/${form.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-      );
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.message || "";
-
-        throw new Error(errorMessage || "Something went wrong");
+        throw new Error(errorData.message || "Something went wrong");
       }
 
       toast.success("Form updated successfully");
-
       navigate("/forms");
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -131,11 +131,11 @@ export default function EditForm() {
     <main className="w-full h-dvh flex items-center justify-center">
       <Card className="w-full max-w-md shadow-lg rounded-md">
         <CardHeader className="flex flex-col gap-2 items-center">
-          <CardTitle className="text-2xl font-bold text-center text-[#56453f]">
+          <CardTitle className="text-2xl font-bold text-center">
             Edit Form
           </CardTitle>
 
-          <CardDescription className="text-sm text-center text-[#a37764]">
+          <CardDescription className="text-sm text-center text-muted-foreground">
             Update your form details
           </CardDescription>
         </CardHeader>

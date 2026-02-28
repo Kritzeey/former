@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Former | Easy Form Maker" },
     { name: "description", content: "Create forms, hassle free." },
@@ -19,15 +19,16 @@ export default function Home() {
             Create forms, hassle-free.
           </div>
         </div>
+
         <div className="flex gap-4 justify-center">
           <Link to="/forms">
-            <Button className="hover:opacity-90 cursor-pointer text-md p-5 rounded-md">
+            <Button className="hover:opacity-90 cursor-pointer text-base p-5 rounded-md">
               Forms List
             </Button>
           </Link>
 
           <Link to="/forms/create">
-            <Button className="hover:opacity-90 cursor-pointer text-md p-5 rounded-md">
+            <Button className="hover:opacity-90 cursor-pointer text-base p-5 rounded-md">
               Create a Form
             </Button>
           </Link>

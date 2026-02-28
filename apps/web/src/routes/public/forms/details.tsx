@@ -10,15 +10,19 @@ export function meta({ loaderData }: Route.MetaArgs) {
         ? `Former | ${loaderData._title}`
         : "Former | Form Detail",
     },
-    { name: "description", content: loaderData?.description || "Form detail." },
+    {
+      name: "description",
+      content: loaderData?._description || "Form detail.",
+    },
   ];
 }
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const token = getCookie("accessToken");
   const id = params.id;
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-  const response = await fetch(`http://localhost:3000/api/forms/${id}`, {
+  const response = await fetch(`${apiUrl}/forms/${id}`, {
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -36,6 +40,11 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
   const data = await response.json();
 
   return data.form;
+}
+
+interface Question {
+  id: string | number;
+  question: string;
 }
 
 export default function FormDetail() {
@@ -61,7 +70,7 @@ export default function FormDetail() {
 
       <div className="max-w-4xl w-full mx-auto flex flex-col gap-4 my-4">
         {form.questions && form.questions.length > 0 ? (
-          form.questions.map((question: any, index: number) => (
+          form.questions.map((question: Question, index: number) => (
             <Card key={question.id || index} className="rounded-md bg-white/60">
               <CardHeader>
                 <CardTitle className="text-xl">
