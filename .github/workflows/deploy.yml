@@ -19,8 +19,18 @@ jobs:
           username: ${{ secrets.VM_USERNAME }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
+            if [ ! -d "/opt/former" ]; then
+              echo "Directory /opt/former not found. Running initial setup..."
+              sudo mkdir -p /opt/former
+              sudo chown -R $USER:$USER /opt/former
+              git config --global --add safe.directory /opt/former
+              git clone https://github.com/kritzeey/former.git /opt/former
+            fi
+            
             cd /opt/former
             git pull origin main
+            
             docker compose -f docker-compose.prod.yml build
             docker compose -f docker-compose.prod.yml up -d
             docker compose -f docker-compose.prod.yml exec -T server npx prisma migrate deploy --schema=../../packages/db/prisma/schema/schema.prisma
+            
