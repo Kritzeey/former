@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCookie } from "@/lib/utils";
-import type { Route } from "./+types/_public.forms.$id";
+import type { Route } from "./+types/details";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [

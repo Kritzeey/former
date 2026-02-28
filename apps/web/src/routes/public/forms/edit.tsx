@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { getCookie } from "@/lib/utils";
-import type { Route } from "./+types/_public.forms.edit.$id";
+import type { Route } from "./+types/edit";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [

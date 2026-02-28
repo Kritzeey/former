@@ -2,8 +2,8 @@ import FormCard from "@/components/form-card";
 import { Button } from "@/components/ui/button";
 import { Link, useLoaderData } from "react-router";
 import { getCookie } from "@/lib/utils";
-import { useState } from "react"; // 1. Added useState
-import type { Route } from "./+types/_public.forms._index";
+import { useState } from "react";
+import type { Route } from "./+types/list";
 
 export function meta({}: Route.MetaArgs) {
   return [
