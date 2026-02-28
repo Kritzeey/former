@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { UnauthorizedException } from "../../domain/exceptions/http.exception";
+import { UnauthorizedException } from "@/domain/exceptions/http.exception";
 import { env } from "@former/env/server";
 
 export const authMiddleware = (

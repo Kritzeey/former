@@ -1,5 +1,5 @@
 import prisma from "@former/db";
-import type { IFormRepository } from "../../../application/ports/forms/form-repository.interface";
+import type { IFormRepository } from "@/application/ports/forms/form-repository.interface";
 import { Form } from "@/domain/entities/forms/form.entity";
 import type { Form as PrismaForm } from "../../../../../../packages/db/prisma/generated/client";
 
