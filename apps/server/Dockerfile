@@ -9,7 +9,8 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
-RUN npm ci
+# Changed from npm ci to npm install
+RUN npm install
 COPY --from=builder /app/out/full/ .
 RUN npx turbo run build --filter=server
 
