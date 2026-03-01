@@ -14,7 +14,7 @@ FROM nginx:alpine
 # Copy the built assets from the builder stage
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 # Copy your custom Nginx routing configuration
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/packages/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
