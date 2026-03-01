@@ -7,8 +7,6 @@ COPY apps/server ./apps/server
 
 RUN npm install
 
-# --- SOLUSI MUTLAK ---
-# Sisipkan DATABASE_URL langsung di depan perintah generate
 RUN cd packages/db && DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npx prisma generate
 
 RUN npx turbo run build --filter=server
