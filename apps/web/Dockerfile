@@ -1,7 +1,7 @@
 FROM node:22-slim AS builder
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN rm -rf package-lock.json node_modules && npm install
 RUN npx turbo run build --filter=web
 
 FROM node:22-slim AS runner
