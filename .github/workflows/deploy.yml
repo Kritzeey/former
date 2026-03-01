@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             cd /opt/former
-            git pull origin main
+            sudo git pull origin main
 
             cd packages/docker
             
