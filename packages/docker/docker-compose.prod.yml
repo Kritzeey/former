@@ -13,7 +13,7 @@ services:
 
   api:
     build:
-      context: .. # This tells Docker to run the build from the root folder
+      context: ../..
       dockerfile: packages/docker/server.Dockerfile
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public
@@ -28,7 +28,7 @@ services:
 
   web:
     build:
-      context: ..
+      context: ../..
       dockerfile: packages/docker/web.Dockerfile
     ports:
       - "80:80"

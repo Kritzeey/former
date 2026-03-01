@@ -21,10 +21,10 @@ jobs:
           script: |
             cd /opt/former
             sudo git pull origin main
-
-            cd packages/docker
             
-            docker compose -f docker-compose.prod.yml build
-            docker compose -f docker-compose.prod.yml up -d
-            docker compose -f docker-compose.prod.yml exec -T server npx prisma migrate deploy --schema=../../packages/db/prisma/schema/schema.prisma
+            docker compose --env-file .env -f packages/docker/docker-compose.prod.yml build
+            
+            docker compose --env-file .env -f packages/docker/docker-compose.prod.yml up -d
+            
+            docker compose --env-file .env -f packages/docker/docker-compose.prod.yml exec -T server npx prisma migrate deploy --schema=../../packages/db/prisma/schema/schema.prisma
             
